@@ -47,7 +47,7 @@ def init_bd():
     #close() liberar a conexão(boa prática)
     conn.close()
     
-    print("Banco de dados inicializado com sucesso!")
+print("Banco de dados inicializado com sucesso!")
 
 
 #init_bd()

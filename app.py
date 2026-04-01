@@ -137,6 +137,63 @@ def criar_ordem():
     
     #201 - retornar "created" com o registro completo
     return jsonify(dict(nova_ordem)), 201
+
+
+    #Código rota para atualização de uma ordem (PUT)
+    
+    @app.route('/ordens/<int:ordem_id>', methods=['PUT'])
+    def atualizar_ordem(ordem_id):
+        """
+    Atualiza o status de uma ordem de producao existente.
+    Parametros de URL:
+    ordem_id (int): ID da ordem a atualizar.
+    
+    Body esperado (JSON):
+    status (str): Novo status. Valores aceitos:
+    'Pendente', 'Em andamento', 'Concluida'.
+    
+    Retorna:
+    200 + JSON da ordem atualizada.
+    400 + erro se status invalido.
+    404 + erro se ordem nao encontrada.
+    """
+    dados = request.get_json()
+    if not dados:
+        return jsonify({'erro': 'Body da requisicao ausente ou invalido.'}), 400
+    
+    # Valida o campo status
+    status_validos = ['Pendente', 'Em andamento', 'Concluida']
+    novo_status = dados.get('status', '').strip()
+    if not novo_status:
+        return jsonify({'erro': 'Campo "status" e obrigatorio.'}), 400
+    
+    if novo_status not in status_validos:
+        return jsonify({'erro': f'Status invalido. Valores permitidos:{status_validos}'}), 400
+        
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # Verifica se a ordem existe antes de tentar atualizar
+    cursor.execute('SELECT id FROM ordens WHERE id = ?', (ordem_id,))
+    if cursor.fetchone() is None:
+        conn.close()
+        return jsonify({'erro': f'Ordem {ordem_id} nao encontrada.'}), 404
+    
+    # Executa a atualizacao
+    cursor.execute(
+    'UPDATE ordens SET status = ? WHERE id = ?', (novo_status, ordem_id, ))
+    
+    conn.commit()
+    conn.close()
+    
+    # Retorna o registro atualizado
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM ordens WHERE id = ?', (ordem_id,))
+    ordem_atualizada = cursor.fetchone()
+    conn.close()
+    
+    return jsonify(dict(ordem_atualizada)), 200
     
 #PONTO DE PARTIDA -------------------------------------------------------
 
