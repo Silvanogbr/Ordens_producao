@@ -117,7 +117,7 @@ def criar_ordem():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO ordens (prodto, quantidade, status) VALUES (?, ?, ?)',
+        'INSERT INTO ordens (produto, quantidade, status) VALUES (?, ?, ?)',
         (produto, quantidade, status)
     )
     
