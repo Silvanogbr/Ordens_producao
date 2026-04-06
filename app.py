@@ -139,23 +139,24 @@ def criar_ordem():
     return jsonify(dict(nova_ordem)), 201
 
 
-    #Código rota para atualização de uma ordem (PUT)
+    #Código rota para atualização de uma ordem de produção (PUT)
     
-    @app.route('/ordens/<int:ordem_id>', methods=['PUT'])
-    def atualizar_ordem(ordem_id):
-        """
+@app.route('/ordens/<int:ordem_id>', methods=['PUT'])
+def atualizar_ordem(ordem_id):
+    """
     Atualiza o status de uma ordem de producao existente.
+    
     Parametros de URL:
-    ordem_id (int): ID da ordem a atualizar.
+        ordem_id (int): ID da ordem a atualizar.
     
     Body esperado (JSON):
-    status (str): Novo status. Valores aceitos:
-    'Pendente', 'Em andamento', 'Concluida'.
+        status (str): Novo status. Valores aceitos:
+        'Pendente', 'Em andamento', 'Concluida'.
     
     Retorna:
-    200 + JSON da ordem atualizada.
-    400 + erro se status invalido.
-    404 + erro se ordem nao encontrada.
+        200 : JSON da ordem atualizada.
+        400 : erro se status for invalido.
+        404 :  erro se ordem nao encontrada.
     """
     dados = request.get_json()
     if not dados:
@@ -180,8 +181,7 @@ def criar_ordem():
         return jsonify({'erro': f'Ordem {ordem_id} nao encontrada.'}), 404
     
     # Executa a atualizacao
-    cursor.execute(
-    'UPDATE ordens SET status = ? WHERE id = ?', (novo_status, ordem_id, ))
+    cursor.execute('UPDATE ordens SET status = ? WHERE id = ?', (novo_status, ordem_id))
     
     conn.commit()
     conn.close()
@@ -194,6 +194,50 @@ def criar_ordem():
     conn.close()
     
     return jsonify(dict(ordem_atualizada)), 200
+    
+    
+    #ROTA - Remover uma ordem(DELETE)
+@app.route('/ordens/<int:ordem_id>', methods=['DELETE'])
+def remover_ordem(ordem_id):
+    """
+    Remover permanentemente uma ordem de producao pelo id.
+    
+    Parametros de URL:
+        ordem_id (int) : id da ordem a ser removida.
+        
+    Retorna:
+        200 - confirmação (Mensagem)
+        400 - erro (Mensagem) se a ordem nao for encontrada
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    #verificação de existencia antes de DELETAR o registro
+    cursor.execute('SELECT id, produto FROM ordens WHERE id = ?', (ordem_id,))
+    ordem = cursor.fetchone()
+    
+    if ordem is None:
+        conn.close()
+        return jsonify({'erro': f'Ordem de numero {ordem_id} nao encontrda'}), 400
+    nome_produto_apagado = ordem['produto']    
+    
+    #Execução de fato da operação
+    cursor .execute('DELETE FROM ordens WHERE id = ?', (ordem_id,))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'mensagem': f'Ordem de numero {ordem_id} ({nome_produto_apagado}) removido com sucesso!', 'id_removido': ordem_id}), 200
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 #PONTO DE PARTIDA -------------------------------------------------------
 
