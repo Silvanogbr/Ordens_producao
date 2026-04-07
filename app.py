@@ -238,16 +238,6 @@ def remover_ordem(ordem_id):
     return jsonify({'mensagem': f'Ordem de numero {ordem_id} ({nome_produto_apagado}) removido com sucesso!', 'id_removido': ordem_id}), 200
     
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 #PONTO DE PARTIDA -------------------------------------------------------
 
 if __name__=='__main__':
