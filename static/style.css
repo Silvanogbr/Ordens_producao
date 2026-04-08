@@ -1,20 +1,20 @@
-
 /* — Reset e base ————————————————————————————————————————————————— */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f0f4f8;
-  color: #263238;
+  background: #a8ccf0; /* Fundo super claro e limpo */
+  color: #232c3a; /* Texto cinza escuro no lugar do preto absoluto */
   min-height: 100vh;
 }
 
 /* — Cabecalho ———————————————————————————————————————————————————— */
 header {
-  background: linear-gradient(135deg, #1F3864, #00897B);
-  color: white;
+  background: #ffffff; /* Cabeçalho branco */
+  color: #0f172a; 
   padding: 1.2rem 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* Sombra bem leve */
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .header-content {
@@ -25,19 +25,19 @@ header {
   align-items: center;
 }
 
-header h1 { font-size: 1.4rem; font-weight: 700; }
+header h1 { font-size: 1.4rem; font-weight: 700; color: #1e293b; }
 
 /* — Badge de status da API ——————————————————————————————————————— */
 #status-badge {
   font-size: 0.8rem;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.4);
+  font-weight: 600;
 }
 
-#status-badge.online { background:#00897B; border-color:#00897B; }
-#status-badge.offline { background:#B71C1C; border-color:#B71C1C; }
+/* Tons pastéis para os status do servidor */
+#status-badge.online { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; } 
+#status-badge.offline { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; } 
 
 /* — Layout principal ————————————————————————————————————————————— */
 main {
@@ -51,18 +51,19 @@ main {
 
 /* — Cards ———————————————————————————————————————————————————————— */
 .card {
-  background: white;
-  border-radius: 10px;
+  background: #ffffff;
+  border-radius: 12px; /* Bordas um pouco mais redondas */
   padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03); /* Sombra mais ampla e difusa */
+  border: 1px solid #f1f5f9;
 }
 
 .card h2 {
   font-size: 1.1rem;
-  color: #00897B;
+  color: #475569; /* Cinza médio suave */
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #E0F2F1;
+  border-bottom: 2px solid #f1f5f9;
 }
 
 /* — Formulario ——————————————————————————————————————————————————— */
@@ -78,17 +79,22 @@ main {
 }
 
 .form-group { display: flex; flex-direction: column; gap: 4px; }
-label { font-size: 0.85rem; font-weight: 600; color: #546E7A; }
+label { font-size: 0.85rem; font-weight: 600; color: #64748b; }
 input, select {
-  padding: 0.55rem 0.8rem;
-  border: 1.5px solid #CFD8DC;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 0.95rem;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
   outline: none;
+  background: #ffffff;
 }
 
-input:focus, select:focus { border-color: #00897B; }
+/* Foco em um tom de azul claro moderno e sombra sutil */
+input:focus, select:focus { 
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+}
 
 /* — Botoes ——————————————————————————————————————————————————————— */
 button {
@@ -98,15 +104,21 @@ button {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
-button:hover { opacity: 0.88; }
 button:active { transform: scale(0.97); }
 
-#btn-cadastrar { background: #00897B; color: white; }
-.btn-atualizar { background: #E0F2F1; color: #00897B; font-size:0.85rem; }
-.btn-excluir { background: #FFEBEE; color: #C62828; font-size:0.8rem; padding:4px 10px; }
+/* Azul moderno no lugar do verde escuro */
+#btn-cadastrar { background: #3b82f6; color: white; } 
+#btn-cadastrar:hover { background: #2563eb; }
+
+/* Botões secundários com fundo super leve */
+.btn-atualizar { background: #f1f5f9; color: #475569; font-size:0.85rem; border: 1px solid #e2e8f0; }
+.btn-atualizar:hover { background: #e2e8f0; }
+
+.btn-excluir { background: #fef2f2; color: #ef4444; font-size:0.8rem; padding:4px 10px; border: 1px solid #fee2e2; }
+.btn-excluir:hover { background: #fee2e2; color: #dc2626; }
 
 /* — Mensagem de feedback ————————————————————————————————————————— */
 .mensagem {
@@ -117,8 +129,8 @@ button:active { transform: scale(0.97); }
   font-weight: 500;
 }
 
-.mensagem.sucesso { background:#E8F5E9; color:#2E7D32; border-left:4px solid #2E7D32; }
-.mensagem.erro { background:#FFEBEE; color:#C62828; border-left:4px solid #C62828; }
+.mensagem.sucesso { background:#dcfce7; color:#166534; border: 1px solid #bbf7d0; }
+.mensagem.erro { background:#fee2e2; color:#991b1b; border: 1px solid #fecaca; }
 .oculto { display: none; }
 
 /* — Tabela ——————————————————————————————————————————————————————— */
@@ -132,45 +144,60 @@ button:active { transform: scale(0.97); }
 .tabela-container { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 
+/* Cabeçalho da tabela deixou de ser preto e virou cinza bem claro */
 th {
-  background: #263238;
-  color: white;
-  padding: 10px 12px;
+  background: #b1d8ff;
+  color: #3d3d3d;
+  padding: 12px 12px;
   text-align: left;
   font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
 }
 
-td { padding: 10px 12px; border-bottom: 1px solid #ECEFF1; }
-tr:hover td { background: #F5F5F5; }
+td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; color: #475569; }
+tr:hover td { background: #5b758f; }
 
-/* — Badges de status —————————————————————————————————————————————— */
+/* — Badges de status da tabela (Tons Pastéis)
+ ————————————————————— */
 .badge {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
-.badge-pendente { background:#FFF9C4; color:#F57F17; }
-.badge-andamento { background:#E3F2FD; color:#0D47A1; }
-.badge-concluida { background:#E8F5E9; color:#2E7D32; }
+.badge-pendente { background:#f1f1ee; color:#854d0e; } /* Amarelo clarinho */
+.badge-andamento { background:#e5eff5; color:#0369a1; } /* Azul clarinho */
+.badge-concluida { background:#868d88; color:#166534; } /* Verde clarinho */
 
 /* — Select de status na tabela ——————————————————————————————————— */
 .select-status {
-  padding: 3px 6px;
-  border: 1px solid #CFD8DC;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border: 1px solid #b1cdf1;
+  border-radius: 6px;
   font-size: 0.82rem;
   cursor: pointer;
+  color: #475569;
 }
 
-/* — Loading —————————————————————————————————————————————————————— */
+.select-status:focus {
+  border-color: #94a3b8;
+  box-shadow: none;
+}
+
+/* — Loading e Mensagens vazias ——————————————————————————————————— */
 #loading {
   text-align: center;
   padding: 1rem;
-  color: #00897B;
+  color: #3b82f6; 
   font-weight: 600;
 }
 
-#sem-dados { text-align:center; padding:2rem; color:#90A4AE; }
+#sem-dados { text-align:center; padding:2rem; color:#94a3b8; }
+
+/* — Logo do Cabeçalho ——————————————————————————————————————— */
+.logo-time {
+  max-width: 80px; /* Altere esse valor (ex: 80px, 120px) até achar o tamanho ideal */
+  height: auto;     /* Mantém a proporção da imagem */
+}
